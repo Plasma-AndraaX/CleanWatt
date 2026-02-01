@@ -112,6 +112,9 @@ public class BatteryUpdateService : Service
         {
             if (intent == null) return;
             _service.UpdateAllWidgets();
+
+            // Notify the app to update its UI
+            MessagingCenter.Send<object>(this, "BatteryChanged");
         }
     }
 }

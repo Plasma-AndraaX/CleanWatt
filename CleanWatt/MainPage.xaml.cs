@@ -12,7 +12,17 @@ public partial class MainPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        MessagingCenter.Subscribe<object>(this, "BatteryChanged", (sender) =>
+        {
+            MainThread.BeginInvokeOnMainThread(UpdateBatteryInfo);
+        });
         UpdateBatteryInfo();
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        MessagingCenter.Unsubscribe<object>(this, "BatteryChanged");
     }
 
     private void UpdateBatteryInfo()
