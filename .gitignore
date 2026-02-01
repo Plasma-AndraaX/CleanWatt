@@ -1,0 +1,22 @@
+# Build outputs
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.csproj.user
+*.suo
+*.user
+
+# Keystore (ne jamais publier)
+*.keystore
+*.jks
+KEYSTORE_CREDENTIALS.txt
+
+# Claude Code
+.claude/
+CLAUDE.md
+
+# OS files
+.DS_Store
+Thumbs.db

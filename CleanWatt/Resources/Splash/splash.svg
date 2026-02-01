@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="456" height="456" viewBox="0 0 456 456" xmlns="http://www.w3.org/2000/svg">
+  <!-- Battery body -->
+  <rect x="98" y="138" width="230" height="180" rx="20" ry="20" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="4"/>
+
+  <!-- Battery terminal -->
+  <rect x="328" y="193" width="35" height="70" rx="8" ry="8" fill="#FFFFFF"/>
+
+  <!-- Lightning bolt (energy symbol) -->
+  <polygon points="245,158 175,238 215,238 195,298 275,208 230,208 255,158" fill="#1B5E20"/>
+</svg>

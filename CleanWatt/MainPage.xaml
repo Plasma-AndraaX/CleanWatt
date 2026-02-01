@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BatteryWidget.MainPage"
+             BackgroundColor="#1E1E1E">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="25">
+
+            <Label Text="Batterie"
+                   FontSize="32"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+
+            <!-- Battery Level Circle -->
+            <Frame BackgroundColor="#2D2D2D"
+                   CornerRadius="100"
+                   HeightRequest="200"
+                   WidthRequest="200"
+                   HorizontalOptions="Center"
+                   Padding="0"
+                   HasShadow="False">
+                <Grid>
+                    <Label x:Name="LevelLabel"
+                           Text="---%"
+                           FontSize="48"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Grid>
+            </Frame>
+
+            <!-- Status -->
+            <Frame BackgroundColor="#2D2D2D"
+                   CornerRadius="12"
+                   Padding="20"
+                   HasShadow="False">
+                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
+                    <Label Text="État"
+                           TextColor="#AAAAAA"
+                           FontSize="14"
+                           Grid.Row="0" Grid.Column="0" />
+                    <Label x:Name="StatusLabel"
+                           Text="---"
+                           TextColor="White"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           Grid.Row="1" Grid.Column="0" />
+
+                    <Label Text="Température"
+                           TextColor="#AAAAAA"
+                           FontSize="14"
+                           Grid.Row="0" Grid.Column="1"
+                           HorizontalOptions="End" />
+                    <Label x:Name="TempLabel"
+                           Text="---"
+                           TextColor="White"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           Grid.Row="1" Grid.Column="1"
+                           HorizontalOptions="End" />
+                </Grid>
+            </Frame>
+
+            <!-- Health -->
+            <Frame BackgroundColor="#2D2D2D"
+                   CornerRadius="12"
+                   Padding="20"
+                   HasShadow="False">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Santé de la batterie"
+                           TextColor="#AAAAAA"
+                           FontSize="14" />
+                    <Label x:Name="HealthLabel"
+                           Text="---"
+                           TextColor="White"
+                           FontSize="18"
+                           FontAttributes="Bold" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Instructions -->
+            <Frame BackgroundColor="#2D2D2D"
+                   CornerRadius="12"
+                   Padding="20"
+                   HasShadow="False">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Widget"
+                           TextColor="#AAAAAA"
+                           FontSize="14" />
+                    <Label Text="Pour ajouter le widget à votre écran d'accueil, maintenez appuyé sur l'écran d'accueil, sélectionnez 'Widgets', puis cherchez 'CleanWatt'. Le widget s'adapte automatiquement à sa taille."
+                           TextColor="White"
+                           FontSize="14"
+                           LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
