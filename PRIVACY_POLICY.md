@@ -40,8 +40,7 @@ Cette politique peut être mise à jour. Les modifications seront publiées sur 
 
 ## Contact
 
-Pour toute question concernant cette politique de confidentialité, contactez-nous à :
-**[VOTRE_EMAIL]**
+Pour toute question concernant cette politique de confidentialité, [contactez-nous](https://github.com/Plasma-AndraaX/CleanWatt/issues)
 
 ---
 
