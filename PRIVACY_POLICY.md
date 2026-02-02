@@ -1,47 +1,47 @@
-# Politique de Confidentialité - CleanWatt
+# Privacy Policy - CleanWatt
 
-**Dernière mise à jour : Février 2025**
+**Last updated: February 2025**
 
 ## Introduction
 
-CleanWatt est une application de widget batterie conçue dans le respect de votre vie privée. Cette politique de confidentialité explique comment nous traitons vos données.
+CleanWatt is a battery widget application designed with your privacy in mind. This privacy policy explains how we handle your data.
 
-## Collecte de données
+## Data Collection
 
-**CleanWatt ne collecte AUCUNE donnée personnelle.**
+**CleanWatt does NOT collect ANY personal data.**
 
-L'application :
-- ❌ Ne collecte pas de données personnelles
-- ❌ Ne collecte pas de données d'utilisation
-- ❌ Ne collecte pas de données de localisation
-- ❌ Ne contient pas de trackers ou analytics
-- ❌ Ne contient pas de publicités
-- ❌ N'envoie aucune donnée sur Internet
+The application:
+- Does not collect personal data
+- Does not collect usage data
+- Does not collect location data
+- Contains no trackers or analytics
+- Contains no advertisements
+- Does not send any data over the Internet
 
-## Données utilisées localement
+## Data Used Locally
 
-L'application accède uniquement aux informations de batterie de votre appareil (niveau, état de charge, température, santé) pour les afficher dans le widget. Ces informations :
-- Restent uniquement sur votre appareil
-- Ne sont jamais transmises à des serveurs externes
-- Ne sont pas stockées de manière permanente
+The application only accesses your device's battery information (level, charging status, temperature, health) to display it in the widget. This information:
+- Stays only on your device
+- Is never transmitted to external servers
+- Is not permanently stored
 
-## Autorisations
+## Permissions
 
-L'application utilise les autorisations suivantes, uniquement pour son fonctionnement :
-- **BATTERY_STATS** : Lire les informations de la batterie
-- **FOREGROUND_SERVICE** : Maintenir le widget à jour
-- **RECEIVE_BOOT_COMPLETED** : Redémarrer le service après un redémarrage
+The application uses the following permissions, solely for its operation:
+- **BATTERY_STATS**: Read battery information
+- **FOREGROUND_SERVICE**: Keep the widget updated
+- **RECEIVE_BOOT_COMPLETED**: Restart the service after a reboot
 
-Aucune de ces autorisations n'est utilisée pour collecter ou transmettre des données.
+None of these permissions are used to collect or transmit data.
 
-## Modifications
+## Changes
 
-Cette politique peut être mise à jour. Les modifications seront publiées sur cette page.
+This policy may be updated. Changes will be posted on this page.
 
 ## Contact
 
-Pour toute question concernant cette politique de confidentialité, [contactez-nous](https://github.com/Plasma-AndraaX/CleanWatt/issues)
+For any questions regarding this privacy policy, [contact us](https://github.com/Plasma-AndraaX/CleanWatt/issues)
 
 ---
 
-*CleanWatt - Widget batterie propre, sans pub, sans tracking.*
+*CleanWatt - Clean battery widget, no ads, no tracking.*
