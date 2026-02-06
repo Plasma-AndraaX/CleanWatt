@@ -276,47 +276,39 @@ public class CleanWattWidget : AppWidgetProvider
     {
         var views = new RemoteViews(context.PackageName, Resource.Layout.widget_battery);
 
-        views.SetTextViewText(Resource.Id.battery_level, $"{batteryInfo.Level}%");
-        views.SetTextColor(Resource.Id.battery_level, color);
-
-        views.SetTextViewText(Resource.Id.battery_status, batteryInfo.StatusText);
-        views.SetTextViewText(Resource.Id.battery_temp, LocalizationService.FormatTemperature(batteryInfo.Temperature));
-        views.SetTextViewText(Resource.Id.battery_health, batteryInfo.HealthText);
-
-        // Set localized labels
-        views.SetTextViewText(Resource.Id.label_status, AppStrings.WidgetLabelStatus);
-        views.SetTextViewText(Resource.Id.label_temp, AppStrings.WidgetLabelTemp);
-        views.SetTextViewText(Resource.Id.label_health, AppStrings.WidgetLabelHealth);
-
-        views.SetProgressBar(Resource.Id.battery_progress, 100, batteryInfo.Level, false);
+        // Phone row - same format as BT devices but always visible at top
+        views.SetTextViewText(Resource.Id.phone_name, Build.Model);
+        views.SetTextViewText(Resource.Id.phone_level, $"{batteryInfo.Level}%");
+        views.SetTextColor(Resource.Id.phone_level, color);
+        views.SetProgressBar(Resource.Id.phone_progress, 100, batteryInfo.Level, false);
 
         if (Build.VERSION.SdkInt >= BuildVersionCodes.S)
         {
-            views.SetColorStateList(Resource.Id.battery_progress, "setProgressTintList",
+            views.SetColorStateList(Resource.Id.phone_progress, "setProgressTintList",
                 ColorStateList.ValueOf(color));
         }
 
+        // Phone status icon (charging / power save)
         if (batteryInfo.IsCharging)
         {
-            views.SetTextViewText(Resource.Id.charging_icon, "⚡");
-            views.SetViewVisibility(Resource.Id.charging_icon, WidgetHelper.ViewVisible);
+            views.SetTextViewText(Resource.Id.phone_status_icon, "⚡");
+            views.SetViewVisibility(Resource.Id.phone_status_icon, WidgetHelper.ViewVisible);
+        }
+        else if (batteryInfo.IsPowerSaveMode)
+        {
+            views.SetTextViewText(Resource.Id.phone_status_icon, "🔋");
+            views.SetViewVisibility(Resource.Id.phone_status_icon, WidgetHelper.ViewVisible);
         }
         else
         {
-            views.SetViewVisibility(Resource.Id.charging_icon, WidgetHelper.ViewGone);
+            views.SetViewVisibility(Resource.Id.phone_status_icon, WidgetHelper.ViewGone);
         }
 
-        if (batteryInfo.IsPowerSaveMode)
-        {
-            views.SetTextViewText(Resource.Id.powersave_icon, AppStrings.PowerSaveShort);
-            views.SetViewVisibility(Resource.Id.powersave_icon, WidgetHelper.ViewVisible);
-        }
-        else
-        {
-            views.SetViewVisibility(Resource.Id.powersave_icon, WidgetHelper.ViewGone);
-        }
+        // Phone details line: status + temp + health
+        var details = $"{batteryInfo.StatusText} • {LocalizationService.FormatTemperature(batteryInfo.Temperature)} • {batteryInfo.HealthText}";
+        views.SetTextViewText(Resource.Id.phone_details, details);
 
-        // Bluetooth devices - up to 3 slots
+        // BT device slots
         PopulateLargeWidgetBtDevices(views, btDevices);
 
         return views;
@@ -324,21 +316,12 @@ public class CleanWattWidget : AppWidgetProvider
 
     private static void PopulateLargeWidgetBtDevices(RemoteViews views, List<BluetoothDeviceInfo> btDevices)
     {
-        // Device slot resource IDs
         int[][] slotIds =
         {
             new[] { Resource.Id.bt_device_1, Resource.Id.bt_device_1_icon, Resource.Id.bt_device_1_name, Resource.Id.bt_device_1_progress, Resource.Id.bt_device_1_level },
             new[] { Resource.Id.bt_device_2, Resource.Id.bt_device_2_icon, Resource.Id.bt_device_2_name, Resource.Id.bt_device_2_progress, Resource.Id.bt_device_2_level },
             new[] { Resource.Id.bt_device_3, Resource.Id.bt_device_3_icon, Resource.Id.bt_device_3_name, Resource.Id.bt_device_3_progress, Resource.Id.bt_device_3_level }
         };
-
-        if (btDevices.Count == 0)
-        {
-            views.SetViewVisibility(Resource.Id.bt_devices_container, WidgetHelper.ViewGone);
-            return;
-        }
-
-        views.SetViewVisibility(Resource.Id.bt_devices_container, WidgetHelper.ViewVisible);
 
         int displayCount = Math.Min(btDevices.Count, 3);
 
