@@ -4,6 +4,12 @@
 
 Stop squinting at the tiny battery icon in the status bar. CleanWatt displays your battery level in large format on your home screen: percentage, charging status, temperature, and health. Real-time updates, no ads, no tracking.
 
+## Screenshots
+
+| Single widget | All widget sizes |
+|:---:|:---:|
+| ![Single widget](store_assets/screenshot1.jpeg) | ![All widget sizes](store_assets/screenshot2.jpeg) |
+
 ## Features
 
 - Large, easy-to-read battery percentage
