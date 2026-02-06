@@ -1,3 +1,5 @@
+using BatteryWidget.Resources.Strings;
+
 namespace BatteryWidget.Models;
 
 public class BatteryInfo
@@ -12,24 +14,24 @@ public class BatteryInfo
 
     public string HealthText => Health switch
     {
-        BatteryHealth.Good => "Bonne",
-        BatteryHealth.Overheat => "Surchauffe",
-        BatteryHealth.Dead => "Morte",
-        BatteryHealth.OverVoltage => "Surtension",
-        BatteryHealth.Cold => "Froide",
-        _ => "Inconnue"
+        BatteryHealth.Good => AppStrings.HealthGood,
+        BatteryHealth.Overheat => AppStrings.HealthOverheat,
+        BatteryHealth.Dead => AppStrings.HealthDead,
+        BatteryHealth.OverVoltage => AppStrings.HealthOverVoltage,
+        BatteryHealth.Cold => AppStrings.HealthCold,
+        _ => AppStrings.HealthUnknown
     };
 
     public string StatusText => Status switch
     {
-        BatteryStatus.Charging => "⚡ En charge",
-        BatteryStatus.Discharging => "Décharge",
-        BatteryStatus.Full => "⚡ Pleine",
-        BatteryStatus.NotCharging => "Non en charge",
-        _ => "Inconnu"
+        BatteryStatus.Charging => AppStrings.StatusCharging,
+        BatteryStatus.Discharging => AppStrings.StatusDischarging,
+        BatteryStatus.Full => AppStrings.StatusFull,
+        BatteryStatus.NotCharging => AppStrings.StatusNotCharging,
+        _ => AppStrings.StatusUnknown
     };
 
-    public string PowerSaveText => IsPowerSaveMode ? "🔋 Éco" : "";
+    public string PowerSaveText => IsPowerSaveMode ? AppStrings.PowerSave : "";
 }
 
 // Values match Android BatteryManager constants

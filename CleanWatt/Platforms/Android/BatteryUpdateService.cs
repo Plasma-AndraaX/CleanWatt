@@ -1,10 +1,13 @@
 using Android.App;
 using Android.Appwidget;
+using Android.Bluetooth;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using AndroidX.Core.App;
 using BatteryWidget.Platforms.Android.Widgets;
+using BatteryWidget.Resources.Strings;
+using BatteryWidget.Services;
 
 namespace BatteryWidget.Platforms.Android;
 
@@ -29,14 +32,19 @@ public class BatteryUpdateService : Service
         filter.AddAction(Intent.ActionPowerConnected);
         filter.AddAction(Intent.ActionPowerDisconnected);
         filter.AddAction(PowerManager.ActionPowerSaveModeChanged);
+        filter.AddAction("android.bluetooth.device.action.BATTERY_LEVEL_CHANGED");
+        filter.AddAction(BluetoothDevice.ActionAclConnected);
+        filter.AddAction(BluetoothDevice.ActionAclDisconnected);
         RegisterReceiver(_batteryReceiver, filter);
     }
 
     public override StartCommandResult OnStartCommand(Intent? intent, StartCommandFlags flags, int startId)
     {
+        LocalizationService.ApplyLanguage();
+
         var notification = new NotificationCompat.Builder(this, ChannelId)
-            .SetContentTitle("CleanWatt")
-            .SetContentText("Mise à jour en temps réel active")
+            .SetContentTitle(AppStrings.NotificationTitle)
+            .SetContentText(AppStrings.NotificationText)
             .SetSmallIcon(global::Android.Resource.Drawable.IcMenuInfoDetails)
             .SetOngoing(true)
             .SetPriority(NotificationCompat.PriorityMin)
@@ -79,10 +87,10 @@ public class BatteryUpdateService : Service
         {
             var channel = new NotificationChannel(
                 ChannelId,
-                "CleanWatt - Temps réel",
+                AppStrings.NotificationChannelName,
                 NotificationImportance.Min)
             {
-                Description = "Mise à jour en temps réel du widget"
+                Description = AppStrings.NotificationChannelDescription
             };
 
             var notificationManager = GetSystemService(NotificationService) as NotificationManager;

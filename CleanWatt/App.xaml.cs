@@ -1,9 +1,12 @@
+using BatteryWidget.Services;
+
 namespace BatteryWidget;
 
 public partial class App : Application
 {
     public App()
     {
+        LocalizationService.ApplyLanguage();
         InitializeComponent();
     }
 

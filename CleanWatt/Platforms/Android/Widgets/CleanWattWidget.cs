@@ -4,6 +4,8 @@ using Android.Content;
 using Android.Content.Res;
 using Android.OS;
 using Android.Widget;
+using BatteryWidget.Models;
+using BatteryWidget.Resources.Strings;
 using BatteryWidget.Services;
 using BatteryWidget.Platforms.Android.Widgets;
 
@@ -73,16 +75,19 @@ public class CleanWattWidget : AppWidgetProvider
 
     public static void UpdateWidget(Context context, AppWidgetManager appWidgetManager, int widgetId)
     {
+        LocalizationService.ApplyLanguage();
+
         var batteryInfo = BatteryService.GetBatteryInfo(context);
+        var btDevices = BluetoothBatteryService.GetConnectedDevices(context);
         var size = GetWidgetSize(appWidgetManager, widgetId);
         var color = WidgetHelper.GetBatteryColor(batteryInfo.Level);
 
         RemoteViews views = size switch
         {
-            WidgetSize.Small => BuildSmallLayout(context, batteryInfo, color),
-            WidgetSize.Medium => BuildMediumLayout(context, batteryInfo, color),
-            WidgetSize.Horizontal => BuildHorizontalLayout(context, batteryInfo, color),
-            _ => BuildLargeLayout(context, batteryInfo, color)
+            WidgetSize.Small => BuildSmallLayout(context, batteryInfo, color, btDevices),
+            WidgetSize.Medium => BuildMediumLayout(context, batteryInfo, color, btDevices),
+            WidgetSize.Horizontal => BuildHorizontalLayout(context, batteryInfo, color, btDevices),
+            _ => BuildLargeLayout(context, batteryInfo, color, btDevices)
         };
 
         // Set click intent to open app
@@ -114,7 +119,7 @@ public class CleanWattWidget : AppWidgetProvider
         };
     }
 
-    private static RemoteViews BuildSmallLayout(Context context, Models.BatteryInfo batteryInfo, global::Android.Graphics.Color color)
+    private static RemoteViews BuildSmallLayout(Context context, Models.BatteryInfo batteryInfo, global::Android.Graphics.Color color, List<BluetoothDeviceInfo> btDevices)
     {
         var views = new RemoteViews(context.PackageName, Resource.Layout.widget_battery_small);
 
@@ -144,10 +149,20 @@ public class CleanWattWidget : AppWidgetProvider
             views.SetViewVisibility(Resource.Id.battery_icon, WidgetHelper.ViewGone);
         }
 
+        // Show red alert if any BT device has critical battery
+        if (btDevices.Any(d => d.BatteryLevel <= 15))
+        {
+            views.SetViewVisibility(Resource.Id.bt_alert, WidgetHelper.ViewVisible);
+        }
+        else
+        {
+            views.SetViewVisibility(Resource.Id.bt_alert, WidgetHelper.ViewGone);
+        }
+
         return views;
     }
 
-    private static RemoteViews BuildMediumLayout(Context context, Models.BatteryInfo batteryInfo, global::Android.Graphics.Color color)
+    private static RemoteViews BuildMediumLayout(Context context, Models.BatteryInfo batteryInfo, global::Android.Graphics.Color color, List<BluetoothDeviceInfo> btDevices)
     {
         var views = new RemoteViews(context.PackageName, Resource.Layout.widget_battery_medium);
 
@@ -157,7 +172,7 @@ public class CleanWattWidget : AppWidgetProvider
         string statusText = batteryInfo.StatusText;
         if (batteryInfo.IsPowerSaveMode)
         {
-            statusText += " • Éco";
+            statusText += " • " + AppStrings.PowerSaveShort;
         }
         views.SetTextViewText(Resource.Id.battery_status, statusText);
 
@@ -188,10 +203,22 @@ public class CleanWattWidget : AppWidgetProvider
             views.SetViewVisibility(Resource.Id.powersave_icon, WidgetHelper.ViewGone);
         }
 
+        // Bluetooth devices compact line
+        var btLine = WidgetHelper.FormatCompactDeviceList(btDevices);
+        if (!string.IsNullOrEmpty(btLine))
+        {
+            views.SetTextViewText(Resource.Id.bt_devices_line, btLine);
+            views.SetViewVisibility(Resource.Id.bt_devices_line, WidgetHelper.ViewVisible);
+        }
+        else
+        {
+            views.SetViewVisibility(Resource.Id.bt_devices_line, WidgetHelper.ViewGone);
+        }
+
         return views;
     }
 
-    private static RemoteViews BuildHorizontalLayout(Context context, Models.BatteryInfo batteryInfo, global::Android.Graphics.Color color)
+    private static RemoteViews BuildHorizontalLayout(Context context, Models.BatteryInfo batteryInfo, global::Android.Graphics.Color color, List<BluetoothDeviceInfo> btDevices)
     {
         var views = new RemoteViews(context.PackageName, Resource.Layout.widget_battery_horizontal);
 
@@ -199,7 +226,7 @@ public class CleanWattWidget : AppWidgetProvider
         views.SetTextColor(Resource.Id.battery_level, color);
 
         views.SetTextViewText(Resource.Id.battery_status, batteryInfo.StatusText);
-        views.SetTextViewText(Resource.Id.battery_temp, $"{batteryInfo.Temperature:F1}°C");
+        views.SetTextViewText(Resource.Id.battery_temp, LocalizationService.FormatTemperature(batteryInfo.Temperature));
         views.SetTextViewText(Resource.Id.battery_health, batteryInfo.HealthText);
 
         views.SetProgressBar(Resource.Id.battery_progress, 100, batteryInfo.Level, false);
@@ -222,7 +249,7 @@ public class CleanWattWidget : AppWidgetProvider
 
         if (batteryInfo.IsPowerSaveMode)
         {
-            views.SetTextViewText(Resource.Id.powersave_icon, "Éco");
+            views.SetTextViewText(Resource.Id.powersave_icon, AppStrings.PowerSaveShort);
             views.SetViewVisibility(Resource.Id.powersave_icon, WidgetHelper.ViewVisible);
         }
         else
@@ -230,10 +257,22 @@ public class CleanWattWidget : AppWidgetProvider
             views.SetViewVisibility(Resource.Id.powersave_icon, WidgetHelper.ViewGone);
         }
 
+        // Bluetooth devices compact line
+        var btLine = WidgetHelper.FormatCompactDeviceList(btDevices);
+        if (!string.IsNullOrEmpty(btLine))
+        {
+            views.SetTextViewText(Resource.Id.bt_devices_line, btLine);
+            views.SetViewVisibility(Resource.Id.bt_devices_line, WidgetHelper.ViewVisible);
+        }
+        else
+        {
+            views.SetViewVisibility(Resource.Id.bt_devices_line, WidgetHelper.ViewGone);
+        }
+
         return views;
     }
 
-    private static RemoteViews BuildLargeLayout(Context context, Models.BatteryInfo batteryInfo, global::Android.Graphics.Color color)
+    private static RemoteViews BuildLargeLayout(Context context, Models.BatteryInfo batteryInfo, global::Android.Graphics.Color color, List<BluetoothDeviceInfo> btDevices)
     {
         var views = new RemoteViews(context.PackageName, Resource.Layout.widget_battery);
 
@@ -241,8 +280,13 @@ public class CleanWattWidget : AppWidgetProvider
         views.SetTextColor(Resource.Id.battery_level, color);
 
         views.SetTextViewText(Resource.Id.battery_status, batteryInfo.StatusText);
-        views.SetTextViewText(Resource.Id.battery_temp, $"{batteryInfo.Temperature:F1}°C");
+        views.SetTextViewText(Resource.Id.battery_temp, LocalizationService.FormatTemperature(batteryInfo.Temperature));
         views.SetTextViewText(Resource.Id.battery_health, batteryInfo.HealthText);
+
+        // Set localized labels
+        views.SetTextViewText(Resource.Id.label_status, AppStrings.WidgetLabelStatus);
+        views.SetTextViewText(Resource.Id.label_temp, AppStrings.WidgetLabelTemp);
+        views.SetTextViewText(Resource.Id.label_health, AppStrings.WidgetLabelHealth);
 
         views.SetProgressBar(Resource.Id.battery_progress, 100, batteryInfo.Level, false);
 
@@ -264,7 +308,7 @@ public class CleanWattWidget : AppWidgetProvider
 
         if (batteryInfo.IsPowerSaveMode)
         {
-            views.SetTextViewText(Resource.Id.powersave_icon, "Éco");
+            views.SetTextViewText(Resource.Id.powersave_icon, AppStrings.PowerSaveShort);
             views.SetViewVisibility(Resource.Id.powersave_icon, WidgetHelper.ViewVisible);
         }
         else
@@ -272,6 +316,68 @@ public class CleanWattWidget : AppWidgetProvider
             views.SetViewVisibility(Resource.Id.powersave_icon, WidgetHelper.ViewGone);
         }
 
+        // Bluetooth devices - up to 3 slots
+        PopulateLargeWidgetBtDevices(views, btDevices);
+
         return views;
+    }
+
+    private static void PopulateLargeWidgetBtDevices(RemoteViews views, List<BluetoothDeviceInfo> btDevices)
+    {
+        // Device slot resource IDs
+        int[][] slotIds =
+        {
+            new[] { Resource.Id.bt_device_1, Resource.Id.bt_device_1_icon, Resource.Id.bt_device_1_name, Resource.Id.bt_device_1_progress, Resource.Id.bt_device_1_level },
+            new[] { Resource.Id.bt_device_2, Resource.Id.bt_device_2_icon, Resource.Id.bt_device_2_name, Resource.Id.bt_device_2_progress, Resource.Id.bt_device_2_level },
+            new[] { Resource.Id.bt_device_3, Resource.Id.bt_device_3_icon, Resource.Id.bt_device_3_name, Resource.Id.bt_device_3_progress, Resource.Id.bt_device_3_level }
+        };
+
+        if (btDevices.Count == 0)
+        {
+            views.SetViewVisibility(Resource.Id.bt_devices_container, WidgetHelper.ViewGone);
+            return;
+        }
+
+        views.SetViewVisibility(Resource.Id.bt_devices_container, WidgetHelper.ViewVisible);
+
+        int displayCount = Math.Min(btDevices.Count, 3);
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (i < displayCount)
+            {
+                var device = btDevices[i];
+                var deviceColor = WidgetHelper.GetBatteryColor(device.BatteryLevel);
+
+                views.SetViewVisibility(slotIds[i][0], WidgetHelper.ViewVisible);
+                views.SetTextViewText(slotIds[i][1], device.DeviceIcon);
+                views.SetTextViewText(slotIds[i][2], device.Name);
+                views.SetProgressBar(slotIds[i][3], 100, device.BatteryLevel, false);
+
+                if (Build.VERSION.SdkInt >= BuildVersionCodes.S)
+                {
+                    views.SetColorStateList(slotIds[i][3], "setProgressTintList",
+                        ColorStateList.ValueOf(deviceColor));
+                }
+
+                views.SetTextViewText(slotIds[i][4], $"{device.BatteryLevel}%");
+                views.SetTextColor(slotIds[i][4], deviceColor);
+            }
+            else
+            {
+                views.SetViewVisibility(slotIds[i][0], WidgetHelper.ViewGone);
+            }
+        }
+
+        // Overflow indicator
+        if (btDevices.Count > 3)
+        {
+            views.SetTextViewText(Resource.Id.bt_overflow, $"+{btDevices.Count - 3}");
+            views.SetViewVisibility(Resource.Id.bt_overflow, WidgetHelper.ViewVisible);
+        }
+        else
+        {
+            views.SetViewVisibility(Resource.Id.bt_overflow, WidgetHelper.ViewGone);
+        }
     }
 }

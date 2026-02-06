@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="0" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <!-- Main page labels -->
+  <data name="Battery" xml:space="preserve">
+    <value>Batería</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>Temperatura</value>
+  </data>
+  <data name="BatteryHealth" xml:space="preserve">
+    <value>Salud de la batería</value>
+  </data>
+  <data name="Widget" xml:space="preserve">
+    <value>Widget</value>
+  </data>
+  <data name="WidgetInstructions" xml:space="preserve">
+    <value>Para añadir el widget a la pantalla de inicio, mantenga pulsada la pantalla de inicio, seleccione 'Widgets' y busque 'CleanWatt'. El widget se adapta automáticamente a su tamaño.</value>
+  </data>
+
+  <!-- Battery status -->
+  <data name="StatusCharging" xml:space="preserve">
+    <value>⚡ Cargando</value>
+  </data>
+  <data name="StatusDischarging" xml:space="preserve">
+    <value>Descargando</value>
+  </data>
+  <data name="StatusFull" xml:space="preserve">
+    <value>⚡ Llena</value>
+  </data>
+  <data name="StatusNotCharging" xml:space="preserve">
+    <value>Sin carga</value>
+  </data>
+  <data name="StatusUnknown" xml:space="preserve">
+    <value>Desconocido</value>
+  </data>
+
+  <!-- Battery health -->
+  <data name="HealthGood" xml:space="preserve">
+    <value>Buena</value>
+  </data>
+  <data name="HealthOverheat" xml:space="preserve">
+    <value>Sobrecalentamiento</value>
+  </data>
+  <data name="HealthDead" xml:space="preserve">
+    <value>Agotada</value>
+  </data>
+  <data name="HealthOverVoltage" xml:space="preserve">
+    <value>Sobretensión</value>
+  </data>
+  <data name="HealthCold" xml:space="preserve">
+    <value>Fría</value>
+  </data>
+  <data name="HealthUnknown" xml:space="preserve">
+    <value>Desconocida</value>
+  </data>
+
+  <!-- Power save -->
+  <data name="PowerSave" xml:space="preserve">
+    <value>🔋 Eco</value>
+  </data>
+  <data name="PowerSaveShort" xml:space="preserve">
+    <value>Eco</value>
+  </data>
+
+  <!-- Widget labels -->
+  <data name="WidgetLabelStatus" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="WidgetLabelTemp" xml:space="preserve">
+    <value>Temp</value>
+  </data>
+  <data name="WidgetLabelHealth" xml:space="preserve">
+    <value>Salud</value>
+  </data>
+
+  <!-- Notification -->
+  <data name="NotificationTitle" xml:space="preserve">
+    <value>CleanWatt</value>
+  </data>
+  <data name="NotificationText" xml:space="preserve">
+    <value>Actualización en tiempo real activa</value>
+  </data>
+  <data name="NotificationChannelName" xml:space="preserve">
+    <value>CleanWatt - Tiempo real</value>
+  </data>
+  <data name="NotificationChannelDescription" xml:space="preserve">
+    <value>Actualización en tiempo real del widget</value>
+  </data>
+
+  <!-- Bluetooth devices -->
+  <data name="Devices" xml:space="preserve">
+    <value>Dispositivos</value>
+  </data>
+
+  <!-- Settings -->
+  <data name="Settings" xml:space="preserve">
+    <value>Ajustes</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="TemperatureUnit" xml:space="preserve">
+    <value>Temperatura en Fahrenheit</value>
+  </data>
+
+</root>

@@ -7,7 +7,8 @@
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="25">
 
-            <Label Text="Batterie"
+            <Label x:Name="HeaderLabel"
+                   Text="Batterie"
                    FontSize="32"
                    FontAttributes="Bold"
                    TextColor="White"
@@ -38,7 +39,8 @@
                    Padding="20"
                    HasShadow="False">
                 <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
-                    <Label Text="État"
+                    <Label x:Name="StatusHeaderLabel"
+                           Text="État"
                            TextColor="#AAAAAA"
                            FontSize="14"
                            Grid.Row="0" Grid.Column="0" />
@@ -49,7 +51,8 @@
                            FontAttributes="Bold"
                            Grid.Row="1" Grid.Column="0" />
 
-                    <Label Text="Température"
+                    <Label x:Name="TempHeaderLabel"
+                           Text="Température"
                            TextColor="#AAAAAA"
                            FontSize="14"
                            Grid.Row="0" Grid.Column="1"
@@ -70,7 +73,8 @@
                    Padding="20"
                    HasShadow="False">
                 <VerticalStackLayout Spacing="5">
-                    <Label Text="Santé de la batterie"
+                    <Label x:Name="HealthHeaderLabel"
+                           Text="Santé de la batterie"
                            TextColor="#AAAAAA"
                            FontSize="14" />
                     <Label x:Name="HealthLabel"
@@ -81,19 +85,83 @@
                 </VerticalStackLayout>
             </Frame>
 
+            <!-- Bluetooth Devices -->
+            <Frame x:Name="DevicesFrame"
+                   BackgroundColor="#2D2D2D"
+                   CornerRadius="12"
+                   Padding="20"
+                   HasShadow="False"
+                   IsVisible="False">
+                <VerticalStackLayout Spacing="10">
+                    <Label x:Name="DevicesHeaderLabel"
+                           Text="Devices"
+                           TextColor="#AAAAAA"
+                           FontSize="14" />
+                    <VerticalStackLayout x:Name="DevicesContainer"
+                                         Spacing="8" />
+                </VerticalStackLayout>
+            </Frame>
+
             <!-- Instructions -->
             <Frame BackgroundColor="#2D2D2D"
                    CornerRadius="12"
                    Padding="20"
                    HasShadow="False">
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="Widget"
+                    <Label x:Name="WidgetHeaderLabel"
+                           Text="Widget"
                            TextColor="#AAAAAA"
                            FontSize="14" />
-                    <Label Text="Pour ajouter le widget à votre écran d'accueil, maintenez appuyé sur l'écran d'accueil, sélectionnez 'Widgets', puis cherchez 'CleanWatt'. Le widget s'adapte automatiquement à sa taille."
+                    <Label x:Name="WidgetInstructionsLabel"
+                           Text="Pour ajouter le widget à votre écran d'accueil, maintenez appuyé sur l'écran d'accueil, sélectionnez 'Widgets', puis cherchez 'CleanWatt'. Le widget s'adapte automatiquement à sa taille."
                            TextColor="White"
                            FontSize="14"
                            LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Settings -->
+            <Frame BackgroundColor="#2D2D2D"
+                   CornerRadius="12"
+                   Padding="20"
+                   HasShadow="False">
+                <VerticalStackLayout Spacing="15">
+                    <Label x:Name="SettingsHeaderLabel"
+                           Text="Paramètres"
+                           TextColor="#AAAAAA"
+                           FontSize="14" />
+
+                    <!-- Language -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label x:Name="LanguageLabel"
+                               Text="Langue"
+                               TextColor="White"
+                               FontSize="16"
+                               VerticalOptions="Center"
+                               Grid.Column="0" />
+                        <Picker x:Name="LanguagePicker"
+                                TextColor="White"
+                                FontSize="16"
+                                HorizontalOptions="End"
+                                Grid.Column="1"
+                                SelectedIndexChanged="OnLanguageChanged" />
+                    </Grid>
+
+                    <!-- Temperature unit -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label x:Name="TempUnitLabel"
+                               Text="Température en Fahrenheit"
+                               TextColor="White"
+                               FontSize="16"
+                               VerticalOptions="Center"
+                               Grid.Column="0" />
+                        <Switch x:Name="FahrenheitSwitch"
+                                OnColor="#4CAF50"
+                                ThumbColor="White"
+                                HorizontalOptions="End"
+                                Grid.Column="1"
+                                Toggled="OnFahrenheitToggled" />
+                    </Grid>
                 </VerticalStackLayout>
             </Frame>
 

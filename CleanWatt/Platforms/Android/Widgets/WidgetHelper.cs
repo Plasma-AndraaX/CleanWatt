@@ -1,4 +1,6 @@
+using System.Text;
 using BatteryWidget.Models;
+using BatteryWidget.Resources.Strings;
 using AndroidColor = global::Android.Graphics.Color;
 using AndroidViewStates = global::Android.Views.ViewStates;
 
@@ -63,8 +65,28 @@ public static class WidgetHelper
         if (info.IsCharging)
             parts.Add("⚡");
         if (info.IsPowerSaveMode)
-            parts.Add("Éco");
+            parts.Add(AppStrings.PowerSaveShort);
 
         return parts.Count > 0 ? string.Join(" ", parts) : "";
+    }
+
+    public static string FormatCompactDeviceList(List<BluetoothDeviceInfo> devices, int max = 3)
+    {
+        if (devices.Count == 0)
+            return "";
+
+        var sb = new StringBuilder();
+        int count = Math.Min(devices.Count, max);
+
+        for (int i = 0; i < count; i++)
+        {
+            if (i > 0) sb.Append("  ");
+            sb.Append($"{devices[i].DeviceIcon}{devices[i].BatteryLevel}%");
+        }
+
+        if (devices.Count > max)
+            sb.Append($"  +{devices.Count - max}");
+
+        return sb.ToString();
     }
 }
