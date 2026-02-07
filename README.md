@@ -6,9 +6,9 @@ Stop squinting at the tiny battery icon in the status bar. CleanWatt displays yo
 
 ## Screenshots
 
-| Single widget | All widget sizes |
-|:---:|:---:|
-| ![Single widget](store_assets/screenshot1.jpeg) | ![All widget sizes](store_assets/screenshot2.jpeg) |
+| Single widget | All widget sizes | Bluetooth devices |
+|:---:|:---:|:---:|
+| ![Single widget](store_assets/screenshot1.jpeg) | ![All widget sizes](store_assets/screenshot2.jpeg) | ![Bluetooth devices](store_assets/screenshot3.png) |
 
 ## Features
 
